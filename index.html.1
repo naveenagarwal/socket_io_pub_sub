@@ -1,0 +1,6 @@
+<!DOCTYPE html><html><head><title>Node Express App</title><link rel="stylesheet" href="/stylesheets/style.css"><script src="/socket.io/socket.io.js"></script></head><body><h1>Node Express App</h1><p>Welcome to Node Express App</p><script type="text/javascript">var socket = io.connect('http://localhost:4000');
+socket.on('news1', function (data) {
+  console.log(data);
+  alert(data.hello);
+  socket.emit('my other event', { my: 'data' });
+});</script></body></html>

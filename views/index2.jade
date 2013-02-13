@@ -1,0 +1,8 @@
+h1= title
+p Welcome to #{title}
+script(type='text/javascript')
+  var socket = io.connect('http://localhost:4000/news2');
+  socket.on('news2', function (data) {
+    console.log(data);
+    alert(data.hello);
+  });
