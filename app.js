@@ -44,7 +44,7 @@ app.post('/feed', function(request, response){
 
   }else if(reuestEnv == "staging"){
     
-    feedURL = "http://localhost:3000/get_feed?activity=" + payload_id;
+    feedURL = "http://184.72.146.82:4444/get_feed?activity=" + payload_id;
   
   }else if(reuestEnv == "production"){
     
