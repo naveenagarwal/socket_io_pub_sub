@@ -44,7 +44,7 @@ app.post('/feed', function(request, response){
 
   }else if(reuestEnv == "staging"){
     
-    feedURL = "http://mte.idyllic-software.com/get_feed?activity=" + payload_id;
+    feedURL = "http://184.72.146.82:3002/get_feed?activity=" + payload_id;
   
   }else if(reuestEnv == "production"){
     
