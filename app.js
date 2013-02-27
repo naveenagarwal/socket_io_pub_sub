@@ -48,7 +48,7 @@ app.post('/feed', function(request, response){
   
   }else if(reuestEnv == "production"){
     
-    feedURL = "http://localhost:3000/get_feed?activity=" + payload_id;
+    feedURL = "https://myteamsedge.com/get_feed?activity=" + payload_id;
   
   }
 
