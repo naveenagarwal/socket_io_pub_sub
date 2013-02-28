@@ -60,15 +60,14 @@ app.post('/feed', function(request, response){
       var channels = request.body.channels;
       
       if(typeof channels === 'string') {
-        channels = [channels];
+        io.sockets.emit(channels, { payload: payloadData["html_data"] });
+      }else{
+        var i;
+        for(i = 0; i < channels.length; i++){
+          io.sockets.emit(channels[i], { payload: payloadData["html_data"] });
+        }        
       }
 
-      var i;
-
-
-      for(i = 0; i < channels.length; i++){
-        io.sockets.emit(channels[i], { payload: payloadData["html_data"] });
-      }
 
     });
     
