@@ -58,7 +58,13 @@ app.post('/feed', function(request, response){
       var payloadData = JSON.parse(chunk);
 
       var channels = request.body.channels;
+      
+      if(typeof channels === 'string') {
+        channels = [channels];
+      }
+
       var i;
+
 
       for(i = 0; i < channels.length; i++){
         io.sockets.emit(channels[i], { payload: payloadData["html_data"] });
