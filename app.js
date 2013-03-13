@@ -1,13 +1,16 @@
-
-/**
- * Module dependencies.
+/*
+Module dependencies.
  */
 
 var express = require('express')
-  , http    = require('http')
+  , https   = require('https')
+  , fs      = require('fs')
   , routes  = require('./routes');
 
-var app = module.exports = express.createServer();
+var privateKey = fs.readFileSync('/etc/nginx/myteamsedge.key').toString();
+var certificate = fs.readFileSync('/etc/nginx/myteamsedge.crt' ).toString();
+
+var app = module.exports = express.createServer({key: privateKey, cert: certificate});
 var io =  require('socket.io').listen(app);
 
 // Configuration
@@ -37,6 +40,7 @@ app.post('/feed', function(request, response){
 
   var payload_id = request.body.payload;
   var reuestEnv = request.body.request_env;
+  var feedURL = '';
 
   if(reuestEnv == "development"){
     
@@ -52,32 +56,45 @@ app.post('/feed', function(request, response){
   
   }
 
-  http.get(feedURL, function(res){
+  if(reuestEnv == "production"){
     
-    res.on('data', function (chunk) {
-      var payloadData = JSON.parse(chunk);
-
-      var channels = request.body.channels;
       
-      if(typeof channels === 'string') {
-        io.sockets.emit(channels, { payload: payloadData["html_data"] });
-      }else{
+    https.get(feedURL, function(res){
+      
+      res.on('data', function (chunk) {
+        var payloadData = JSON.parse(chunk);
+        var channels = request.body.channels.split(',');
         var i;
-        for(i = 0; i < channels.length; i++){
-          io.sockets.emit(channels[i], { payload: payloadData["html_data"] });
+
+        for(i = 0; i < channels1.length; i++){
+          io.sockets.emit(channels1[i], { payload: payloadData["html_data"] });
         }        
-      }
-
-
+      });
+      
     });
-    
-  })
+  
+  }else{
 
+    http.get(feedURL, function(res){
+      
+      res.on('data', function (chunk) {
+        var payloadData = JSON.parse(chunk);
+        var channels = request.body.channels.split(',');
+        var i;
+
+        for(i = 0; i < channels1.length; i++){
+          io.sockets.emit(channels1[i], { payload: payloadData["html_data"] });
+        }        
+
+
+      });
+      
+    });
+  }
 
   response.send(200);
 
 });
-
 
 app.listen(4444, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
