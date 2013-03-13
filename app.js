@@ -66,8 +66,8 @@ app.post('/feed', function(request, response){
         var channels = request.body.channels.split(',');
         var i;
 
-        for(i = 0; i < channels1.length; i++){
-          io.sockets.emit(channels1[i], { payload: payloadData["html_data"] });
+        for(i = 0; i < channels.length; i++){
+          io.sockets.emit(channels[i], { payload: payloadData["html_data"] });
         }        
       });
       
@@ -82,8 +82,8 @@ app.post('/feed', function(request, response){
         var channels = request.body.channels.split(',');
         var i;
 
-        for(i = 0; i < channels1.length; i++){
-          io.sockets.emit(channels1[i], { payload: payloadData["html_data"] });
+        for(i = 0; i < channels.length; i++){
+          io.sockets.emit(channels[i], { payload: payloadData["html_data"] });
         }        
 
 
